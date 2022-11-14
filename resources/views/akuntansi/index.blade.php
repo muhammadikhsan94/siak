@@ -1,6 +1,10 @@
 @extends('Layouts.Master')
 @include('__Partial.datatable')
 
+@php
+$role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id_pengguna)->where('id_peran', 1)->first();
+@endphp
+
 @section('Main-Content')
 <div class="page-breadcrumb">
     <div class="row">
@@ -26,10 +30,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-					<h4 class="card-title">{!! $judul !!}</h4><hr>
+					<h4 class="card-title">
+                        {!! $judul !!}
+                    </h4><hr>
+                    @if(is_null($role))
 					<button type="button" class="btn btn-info mb-3" id="tambah-modal" data-url="{!! route($basepath.'.store') !!}">
 						<i class="fas fa-plus mr-1"></i> Tambah
 					</button>
+                    @endif
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered table-hover" id="datatables" width="100%" cellspacing="0" data-url="{!! route($basepath.'.data') !!}">
 							<thead>
@@ -93,6 +101,13 @@
             e.preventDefault();
             var url = $(this).data('url');
             window.location.href = url;
+        })
+
+        $(document).on('click', '.btn-verifikasi', function(e) {
+            var url = $(this).data('url');
+            var data = {};
+
+            ajaxSubmit(url, data, table);
         })
     });
 </script>

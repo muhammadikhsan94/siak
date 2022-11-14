@@ -22,6 +22,7 @@
                     </a>
                 </li>
 
+                @if(!is_null(\App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id_pengguna)->where('id_peran', 1)->first()))
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="fas fa-cog me-2"></i>
@@ -42,7 +43,7 @@
                         </li>
                     </ul>
                 </li>
-
+                @endif
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

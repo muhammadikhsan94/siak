@@ -27,7 +27,12 @@ class AkuntansiController extends Controller
     public function data(Request $request)
     {
         verify_ajax_request($request);
-        $data = Model::getList(auth()->user()->id_pengguna);
+        
+        if(!is_null(\App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id_pengguna)->where('id_peran', 1)->first())) {
+            $data = Model::getList();
+        } else {
+            $data = Model::getList(auth()->user()->id_pengguna);
+        }
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -57,7 +62,11 @@ class AkuntansiController extends Controller
                 }
             })
             ->addColumn('action', function($data) {
-                $button = '
+                $button = '<div class="btn-group" role="group" aria-label="Basic example">';
+                if(!is_null(\App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id_pengguna)->where('id_peran', 1)->first()) AND is_null($data->id_verifikator)) {
+                    $button = $button . '<button type="button" class="btn btn-sm btn-success btn-verifikasi text-light" data-url="'.route($this->basepath.'.verify', $data->id_coa_reporting).'" title="Verifikasi"><i class="fa fa-check"></i></button>';
+                }
+                $button = $button . '
                     <button type="button" class="btn btn-sm btn-primary btn-add" data-url="'.route($this->basepath.'.create', $data->id_coa_reporting).'" data-id="'.$data->id_coa_reporting.'" title="Isi Data"><i class="fas fa-edit"></i></button> 
                 ';
                 if($data->a_submit==0) {
@@ -65,6 +74,7 @@ class AkuntansiController extends Controller
                 } else {
                     $button = $button . '<button type="button" class="btn btn-sm btn-primary btn-print" data-url="'.route('print.pengguna', $data->id_coa_reporting).'" title="Cetak"><i class="fas fa-print"></i></button>';
                 }
+                $button = $button . '</div>';
                 
                 return $button;
             })
@@ -188,5 +198,16 @@ class AkuntansiController extends Controller
     public function destroy(Akuntansi $akuntansi)
     {
         //
+    }
+
+    public function verify(Request $request, $id)
+    {
+        $data = Model::findOrFail($id);
+        $data->a_submit = 2;
+        $data->id_verifikator = auth()->user()->id_pengguna;
+        $data->tgl_verifikator = currDateTime();
+        $data->save();
+
+        return 'success';
     }
 }

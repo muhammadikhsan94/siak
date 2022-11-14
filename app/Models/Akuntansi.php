@@ -9,6 +9,7 @@ class Akuntansi extends Model
 {
     protected $table = 'coa_transaction';
     protected $primaryKey = 'id_coa_transaction';
+    public $incrementing = false;
 
     public function coa()
     {

@@ -3,6 +3,7 @@
 
 @php
 $s = \App\Models\AkuntansiReporting::where('id_coa_reporting', $id)->first();
+$role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id_pengguna)->where('id_peran', 1)->first();
 @endphp
 
 @section('Main-Content')
@@ -32,14 +33,14 @@ $s = \App\Models\AkuntansiReporting::where('id_coa_reporting', $id)->first();
             <div class="card">
                 <div class="card-body">
 					<h4 class="card-title">Bagan Akun</h4><hr>
-                    @if(!empty($all) && $all == '1' && $s->a_submit==0)
+                    @if(!empty($all) && $all == '1' && $s->a_submit==0 && is_null($role))
                     <button class="btn btn-warning text-light p-3 my-3 col-12" id="kunci-button" data-url="{!! route($basepath.'.kunci', $id) !!}"><i class="fas fa-key me-2"></i>KUNCI DATA</button>
                     <hr>
                     @endif
                     @foreach(\App\Models\Master\COA::whereNull('id_coa_sub')->orderby('created_at')->get() AS $no=>$item)
                     @php
                     $temp = \App\Models\Master\COA::where('id_coa_sub', $item->id_coa)->pluck('id_coa');
-                    $check = \App\Models\Akuntansi::whereIn('id_coa', $temp)->count();
+                    $check = \App\Models\Akuntansi::where('id_coa_reporting', $id)->whereIn('id_coa', $temp)->count();
                     @endphp
                     <button class="btn {!! ($check==0) ? 'btn-info text-light' : 'btn-success text-light' !!} col-12 mb-2 navButton" data-url="{!! route($basepath.'.create_id', [$id, $item->id_coa]) !!}"><i class="fas {!! ($check>0) ? 'fa-check' : 'fa-edit' !!} me-2"></i>{!! $item->nm_coa !!}</button>
                     @endforeach
@@ -74,15 +75,28 @@ $s = \App\Models\AkuntansiReporting::where('id_coa_reporting', $id)->first();
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <input id="id_coa_header" type="hidden">
-                                            <input class="form-control money" name="total[]" id="{!! $r->id_coa !!}" type="text" value="{!! number_to_currency($value) ?? 0 !!}" pattern="[0-9]+([,\.][0-9]+)?" {!! ($s->a_submit==0) ? 'required' : 'readonly' !!}>
+                                            <input class="form-control money" name="total[]" id="{!! $r->id_coa !!}" type="text" value="{!! number_to_currency($value) ?? 0 !!}" pattern="[0-9]+([,\.][0-9]+)?" {!! ($s->a_submit==0 && is_null($role)) ? 'required' : 'readonly' !!}>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2">Total</th>
+                                    <th>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input class="form-control" id="subtotal" type="text" value="0" pattern="[0-9]+([,\.][0-9]+)?" readonly>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </tfoot>
 						</table>
 					</div>
-                    @if($s->a_submit==0)
+                    @if($s->a_submit==0 && is_null($role))
                     <div class="my-3 text-right">
                         <button class="btn btn-primary ml-auto" id="save-button" data-url="{!! route($basepath.'.update', [$id, $id_coa_header]) !!}"><i class="fas fa-save me-2"></i>UPDATE</button>
                     </div>
@@ -171,6 +185,12 @@ $s = \App\Models\AkuntansiReporting::where('id_coa_reporting', $id)->first();
                 }
             });
         });
+
+        let subtotal = 0;
+        $.each($('.money'), function(index,value) {
+            subtotal += parseInt($(this).val().replace(/[^0-9]/g, ''));
+        });
+        $('#subtotal').val(convertToAngka(subtotal.toString()));
     });
 </script>
 @endpush

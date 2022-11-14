@@ -22,10 +22,23 @@
     <!-- Table Start -->
     <!-- ============================================================== -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <!-- Table -->
+                    <div class="border-left text-center p-t-10">
+                        <h3 class="mb-0 font-weight-bold" id="t_koperasi">{!! $t_koperasi ?? $t_laporan !!}</h3>
+                        <span class="text-muted">{!! (!empty($t_koperasi)) ? 'Total Koperasi' : 'Total Laporan' !!}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="border-left text-center p-t-10">
+                        <h3 class="mb-0 font-weight-bold" id="t_terlapor">{!! number_to_currency($t_terlapor, 'Rp. ') !!}</h3>
+                        <span class="text-muted">Total Terlapor</span>
+                    </div>
                 </div>
             </div>
         </div>

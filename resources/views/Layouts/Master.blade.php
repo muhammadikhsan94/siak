@@ -187,7 +187,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('Batal') }}</button>
                     <a class="btn btn-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Keluar') }}</a>
-                    <form id="logout-form" action="#" method="POST" style="display: none;">
+                    <form id="logout-form" action="{!! url('logout') !!}" method="POST" style="display: none;">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     </form>
                 </div>
