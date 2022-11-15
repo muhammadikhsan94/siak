@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@include('__Partial.datatable')
+@include('__partial.datatable')
 
 @php
 $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id_pengguna)->where('id_peran', 1)->first();

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@include('__Partial.datatable')
+@include('__partial.datatable')
 
 @php
 $s = \App\Models\AkuntansiReporting::where('id_coa_reporting', $id)->first();

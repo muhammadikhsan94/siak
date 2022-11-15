@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@include('__Partial.datatable')
+@include('__partial.datatable')
 
 @section('Main-Content')
 <div class="page-breadcrumb">
