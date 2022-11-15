@@ -1,4 +1,4 @@
-@extends('Layouts.Master')
+@extends('layouts.master')
 @include('__Partial.datatable')
 
 @php
@@ -43,6 +43,7 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
 							<thead>
 								<tr>
 									<th>No</th>
+									<th>Pelapor</th>
 									<th>Tgl Upload Report</th>
 									<th>Total Terisi</th>
 									<th>Tgl Submit</th>
@@ -74,6 +75,7 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
             },
             columns: [
                 { data: 'DT_RowIndex', width: 50, class: 'text-center' },
+                { data: 'nm_pelapor', name: 'tgl_create' },
                 { data: 'tgl_create', name: 'tgl_create' },
                 { data: 'total', name: 'total' },
                 { data: 'tgl_submit', name: 'tgl_submit' },

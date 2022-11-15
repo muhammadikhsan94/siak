@@ -22,9 +22,11 @@ class AkuntansiReporting extends Model
             return \DB::SELECT("
                 SELECT
                     report.*,
+                    pelapor.nm_pengguna AS nm_pelapor,
                     pengguna.nm_pengguna AS nm_verifikator,
                     transaction.total
                 FROM coa_reporting AS report
+                JOIN pengguna AS pelapor ON pelapor.id_pengguna=report.id_pengguna
                 LEFT JOIN pengguna ON pengguna.id_pengguna=report.id_verifikator
                 LEFT JOIN (
                     SELECT id_coa_reporting, SUM(total) AS total
@@ -37,9 +39,11 @@ class AkuntansiReporting extends Model
             return \DB::SELECT("
                 SELECT
                     report.*,
+                    pelapor.nm_pengguna AS nm_pelapor,
                     pengguna.nm_pengguna AS nm_verifikator,
                     transaction.total
                 FROM coa_reporting AS report
+                JOIN pengguna AS pelapor ON pelapor.id_pengguna=report.id_pengguna
                 LEFT JOIN pengguna ON pengguna.id_pengguna=report.id_verifikator
                 LEFT JOIN (
                     SELECT id_coa_reporting, SUM(total) AS total

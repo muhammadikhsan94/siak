@@ -1,4 +1,4 @@
-@extends('Layouts.Master')
+@extends('layouts.master')
 @include('__Partial.datatable')
 
 @section('Main-Content')

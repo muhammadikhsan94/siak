@@ -1,4 +1,4 @@
-@extends('Layouts.Master')
+@extends('layouts.master')
 
 @section('Main-Content')
 <div class="page-breadcrumb">
