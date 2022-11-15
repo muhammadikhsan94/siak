@@ -195,9 +195,16 @@ class AkuntansiController extends Controller
      * @param  \App\Models\Akuntansi  $akuntansi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Akuntansi $akuntansi)
+    public function destroy($id)
     {
-        //
+        $data = Model::findOrFail($id);
+        if($data) {
+            $data->deleted_at = currDateTime();
+            $data->save();
+
+            return 'success';
+        }
+        return 'Data tidak ditemukan!';
     }
 
     public function verify(Request $request, $id)

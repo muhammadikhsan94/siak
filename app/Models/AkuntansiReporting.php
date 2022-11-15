@@ -33,6 +33,7 @@ class AkuntansiReporting extends Model
                     FROM coa_transaction
                     GROUP BY id_coa_reporting
                 ) AS transaction ON transaction.id_coa_reporting=report.id_coa_reporting
+                WHERE report.deleted_at IS NULL
                 ORDER BY report.tgl_create DESC
             ");
         } else {
@@ -50,7 +51,7 @@ class AkuntansiReporting extends Model
                     FROM coa_transaction
                     GROUP BY id_coa_reporting
                 ) AS transaction ON transaction.id_coa_reporting=report.id_coa_reporting
-                WHERE report.id_pengguna='".$id_pengguna."'
+                WHERE report.id_pengguna='".$id_pengguna."' AND report.deleted_at IS NULL
                 ORDER BY report.tgl_create DESC
             ");
         }

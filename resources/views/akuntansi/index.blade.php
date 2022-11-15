@@ -111,6 +111,12 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
 
             ajaxSubmit(url, data, table);
         })
+        
+        $(document).on('click', '.btn-destroy', function (e) {
+            e.preventDefault();
+            var url = $(this).data("url");
+            ajaxDelete(url, table);
+        });
     });
 </script>
 @endpush

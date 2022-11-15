@@ -35,7 +35,7 @@ Route::group([
 
         Route::middleware('auth.koperasi')->group(function() {
             Route::post('akuntansi', 'AkuntansiController@store')->name('akuntansi.store');
-            Route::delete('akuntansi', 'AkuntansiController@destroy')->name('akuntansi.destroy');
+            Route::delete('akuntansi/{id}', 'AkuntansiController@destroy')->name('akuntansi.destroy');
             Route::post('akuntansi/{id}/{coa_header}', 'AkuntansiController@update')->name('akuntansi.update');
             Route::post('akuntansi/{id}', 'AkuntansiController@kunci')->name('akuntansi.kunci');
         });
