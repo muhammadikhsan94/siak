@@ -10,14 +10,14 @@
 
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{!! url('/') !!}" aria-expanded="false">
-                        <i class="fas fa-home me-2"></i>
+                        <i class="fas fa-home mr-2"></i>
                         <span class="hide-menu">Beranda</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{!! url('akuntansi') !!}" aria-expanded="false">
-                        <i class="fas fa-balance-scale me-2"></i>
+                        <i class="fas fa-balance-scale mr-2"></i>
                         <span class="hide-menu">Akuntansi</span>
                     </a>
                 </li>
@@ -25,20 +25,20 @@
                 @if(!is_null(\App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id_pengguna)->where('id_peran', 1)->first()))
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="fas fa-cog me-2"></i>
+                        <i class="fas fa-cog mr-2"></i>
                         <span class="hide-menu">Master Data</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item"><a href="{!! url('pengguna') !!}" class="sidebar-link">
-                            <i class="fas fa-circle me-2"></i>
+                            <i class="fas fa-circle mr-2"></i>
                             <span class="hide-menu"> Pengguna</span></a>
                         </li>
                         <li class="sidebar-item"><a href="{!! url('peran') !!}" class="sidebar-link">
-                            <i class="fas fa-circle me-2"></i>
+                            <i class="fas fa-circle mr-2"></i>
                             <span class="hide-menu"> Peran</span></a>
                         </li>
                         <li class="sidebar-item"><a href="{!! url('coa') !!}" class="sidebar-link">
-                            <i class="fas fa-circle me-2"></i>
+                            <i class="fas fa-circle mr-2"></i>
                             <span class="hide-menu"> Bagan Akun (CoA)</span></a>
                         </li>
                     </ul>

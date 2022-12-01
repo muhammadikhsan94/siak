@@ -34,7 +34,7 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
                 <div class="card-body">
 					<h4 class="card-title">Bagan Akun</h4><hr>
                     @if(!empty($all) && $all == '1' && $s->a_submit==0 && is_null($role))
-                    <button class="btn btn-warning text-light p-3 my-3 col-12" id="kunci-button" data-url="{!! route($basepath.'.kunci', $id) !!}"><i class="fas fa-key me-2"></i>KUNCI DATA</button>
+                    <button class="btn btn-warning text-light p-3 my-3 col-12" id="kunci-button" data-url="{!! route($basepath.'.kunci', $id) !!}"><i class="fas fa-key mr-2"></i>KUNCI DATA</button>
                     <hr>
                     @endif
                     @foreach(\App\Models\Master\COA::whereNull('id_coa_sub')->orderby('created_at')->get() AS $no=>$item)
@@ -42,7 +42,7 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
                     $temp = \App\Models\Master\COA::where('id_coa_sub', $item->id_coa)->pluck('id_coa');
                     $check = \App\Models\Akuntansi::where('id_coa_reporting', $id)->whereIn('id_coa', $temp)->count();
                     @endphp
-                    <button class="btn {!! ($check==0) ? 'btn-info text-light' : 'btn-success text-light' !!} col-12 mb-2 navButton" data-url="{!! route($basepath.'.create_id', [$id, $item->id_coa]) !!}"><i class="fas {!! ($check>0) ? 'fa-check' : 'fa-edit' !!} me-2"></i>{!! $item->nm_coa !!}</button>
+                    <button class="btn {!! ($check==0) ? 'btn-info text-light' : 'btn-success text-light' !!} col-12 mb-2 navButton" data-url="{!! route($basepath.'.create_id', [$id, $item->id_coa]) !!}"><i class="fas {!! ($check>0) ? 'fa-check' : 'fa-edit' !!} mr-2"></i>{!! $item->nm_coa !!}</button>
                     @endforeach
                 </div>
             </div>
@@ -50,7 +50,7 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
         <div class="col-md-8 col-12">
             <div class="card">
                 <div class="card-body">
-					<h4 class="card-title" id="card-title"></h4><hr>
+					<h4 class="card-title" id="card-title">{!! (!empty($akun)) ? '<strong class="text-danger">Masukkan Nilai '.$akun->nm_coa.'</strong>' : 'Pilih Bagan Akun Terlebih Dahulu' !!}</h4><hr>
                     @if(!empty($data))
 					<div class="table-responsive" id="tabel">
 						<table class="table table-striped table-bordered table-hover datatables" width="100%" cellspacing="0">
@@ -83,7 +83,7 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="2">Total</th>
+                                    <th colspan="2"><h3>Total</h3></th>
                                     <th>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
@@ -98,7 +98,7 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
 					</div>
                     @if($s->a_submit==0 && is_null($role))
                     <div class="my-3 text-right">
-                        <button class="btn btn-primary ml-auto" id="save-button" data-url="{!! route($basepath.'.update', [$id, $id_coa_header]) !!}"><i class="fas fa-save me-2"></i>UPDATE</button>
+                        <button class="btn btn-primary ml-auto" id="save-button" data-url="{!! route($basepath.'.update', [$id, $id_coa_header]) !!}"><i class="fas fa-save mr-2"></i>UPDATE</button>
                     </div>
                     @endif
                     @endif
@@ -134,10 +134,8 @@ $role = \App\Models\Master\RolePengguna::where('id_pengguna', auth()->user()->id
 
         if(urlLength<3) {
             $('#tabel').hide();
-            $('#card-title').html('Pilih Bagan Akun Terlebih Dahulu');
         } else {
             $('#tabel').show();
-            $('#card-title').html('Masukkan Nilai Akun');
         }
 
         $('.navButton').on('click', function() {

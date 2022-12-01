@@ -50,7 +50,7 @@
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
                             <!-- <img src="{{ asset('images/logo_icon.png') }}" alt="homepage" class="light-logo" /> -->
-                            <i class="fas fa-balance-scale ms-1 me-2"></i>
+                            <i class="fas fa-balance-scale mx-2"></i>
 
                         </b>
                         <!--End Logo icon -->

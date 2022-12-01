@@ -110,6 +110,7 @@ class AkuntansiController extends Controller
         $d['basepath'] = $this->basepath;
         $d['judul'] = 'Tambah Reporting';
         $d['data'] = \App\Models\Master\COA::where('id_coa_sub', $id_coa_header)->orderBy('created_at', 'asc')->get();
+        $d['akun'] = \App\Models\Master\COA::where('id_coa', $id_coa_header)->first();
         
         $temp = \App\Models\Akuntansi::where('id_coa_reporting', $id)->whereIn('id_coa', \App\Models\Master\COA::whereNotNull('id_coa_sub')->whereNull('deleted_at')->pluck('id_coa'))->count();
         if($temp == \App\Models\Master\COA::whereNotNull('id_coa_sub')->whereNull('deleted_at')->count()) {
